@@ -2,9 +2,15 @@ import TransactionLog from "../models/TransactionLog.js";
 
 const TransactionStatusService = async (transactionId) => {
   const transactionStatus = await TransactionLog.findByPk(transactionId, {
-    attributes: { include: ["transactionMessage", "transactionMessage"] },
+    attributes: { include: ["transactionMessage", "transactionStatus"] },
   });
-  if (transactionStatus.transaction_message) {
+  if (!transactionStatus) {
+    return {
+      Status: "Not Found",
+      Message: "Transaction not found :(",
+    };
+  }
+  if (transactionStatus?.transactionMessage) {
     return {
       Status: transactionStatus.transactionStatus,
       Message: transactionStatus.transactionMessage,

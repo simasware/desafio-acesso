@@ -32,6 +32,12 @@ const TransactionLog = db.define(
       type: Sequelize.STRING,
       allowNull: true,
     },
+    createdAt: {
+      type: Sequelize.DATE,
+    },
+    updatedAt: {
+      type: Sequelize.DATE,
+    },
   },
   { underscored: true }
 );

@@ -1,15 +1,15 @@
 import { Sequelize } from "sequelize";
+import doetenv from "dotenv";
 
-const sequelize = new Sequelize(
-  "postgresql://postgres:docker@localhost:5432/desafio-acesso",
-  {
-    dialect: "postgres",
-    logging: sqlLogger,
-    define: {
-      timestamps: false,
-    },
-  }
-);
+doetenv.config();
+
+const sequelize = new Sequelize(process.env.PG_URL, {
+  dialect: "postgres",
+  logging: sqlLogger,
+  define: {
+    timestamps: true,
+  },
+});
 
 function sqlLogger(queryString, queryObject) {
   console.log(queryString);

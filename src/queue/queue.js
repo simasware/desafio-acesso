@@ -1,39 +1,38 @@
 import amqplib from "amqplib";
 
-const conectar = () => {
-  console.log("Conectando ao AMQP");
+const connect = () => {
   return amqplib
     .connect(process.env.AMQP_URL)
     .then((conn) => conn.createChannel());
 };
 
-const criarFila = (canal, fila) => {
+const createQueue = (channel, queue) => {
   return new Promise((resolve, reject) => {
     try {
-      canal.assertQueue(fila, { durable: true });
-      resolve(canal);
+      channel.assertQueue(queue, { durable: true });
+      resolve(channel);
     } catch (err) {
       reject(err);
     }
   });
 };
 
-const enfileirar = (fila, mensagem) => {
-  conectar()
-    .then((canal) => criarFila(canal, fila))
-    .then((canal) =>
-      canal.sendToQueue(fila, Buffer.from(JSON.stringify(mensagem)))
+const sendToQueue = (queue, mensagem) => {
+  connect()
+    .then((channel) => createQueue(channel, queue))
+    .then((channel) =>
+      channel.sendToQueue(queue, Buffer.from(JSON.stringify(mensagem)))
     )
     .catch((err) => {
       console.log(err);
     });
 };
 
-const consumir = (fila, callback) => {
-  conectar()
-    .then((canal) => criarFila(canal, fila))
-    .then((canal) => canal.consume(fila, callback, { noAck: true }))
+const consume = (queue, callback) => {
+  connect()
+    .then((channel) => createQueue(channel, queue))
+    .then((channel) => channel.consume(queue, callback, { noAck: true }))
     .catch((err) => console.log(err));
 };
 
-export default { enfileirar, consumir };
+export default { sendToQueue, consume };
