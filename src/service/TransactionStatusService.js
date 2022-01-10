@@ -1,4 +1,4 @@
-import TransactionLog from "../models/TransactionLog.js";
+const TransactionLog = require("../models/TransactionLog.js");
 
 const TransactionStatusService = async (transactionId) => {
   const transactionStatus = await TransactionLog.findByPk(transactionId, {
@@ -21,4 +21,4 @@ const TransactionStatusService = async (transactionId) => {
   };
 };
 
-export default TransactionStatusService;
+module.exports = TransactionStatusService;

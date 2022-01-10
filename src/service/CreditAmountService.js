@@ -1,12 +1,13 @@
-import axios from "axios";
+const axios = require("axios");
+const AppMessage = require("../classes/AppMessage.js");
 
-const CreditAmountService = async (accountNumber, amount) => {
+const CreditAmountService = async (accountNumber, amount, type = "Credit") => {
   const amountTransferRequest = await axios.post(
     `${process.env.BANK_API_URL}/Account`,
     {
       accountNumber: accountNumber,
       value: amount,
-      type: "Credit",
+      type: type,
     },
     {
       headers: {
@@ -16,23 +17,10 @@ const CreditAmountService = async (accountNumber, amount) => {
       },
     }
   );
-  if (amountTransferRequest.status === 200) {
-    return {
-      sucess: true,
-      response: {
-        status: "Sucess",
-        message: "",
-      },
-    };
+  if (amountTransferRequest.success) {
+    return AppMessage("Success");
   }
-
-  return {
-    sucess: false,
-    response: {
-      status: "Error",
-      message: amountTransferRequest.statusText,
-    },
-  };
+  return AppMessage("Error", "Transaction failed.", false);
 };
 
-export default CreditAmountService;
+module.exports = CreditAmountService;

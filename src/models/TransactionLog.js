@@ -1,5 +1,5 @@
-import { Sequelize } from "sequelize";
-import db from "../database/db.js";
+const Sequelize = require("sequelize");
+const db = require("../database/db.js");
 
 const TransactionLog = db.define(
   "transaction_log",
@@ -42,4 +42,4 @@ const TransactionLog = db.define(
   { underscored: true }
 );
 
-export default TransactionLog;
+module.exports = TransactionLog;

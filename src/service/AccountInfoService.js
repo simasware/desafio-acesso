@@ -1,4 +1,4 @@
-import axios from "axios";
+const axios = require("axios");
 const AccountInfoService = async (accountNumber) => {
   const accountBalanceRequest = await axios.get(
     `${process.env.BANK_API_URL}/Account/${accountNumber}`,
@@ -11,10 +11,12 @@ const AccountInfoService = async (accountNumber) => {
     }
   );
   if (accountBalanceRequest.status) {
-    return accountBalanceRequest.data;
+    return {
+      success: true,
+      accountInfo: accountBalanceRequest.data,
+    };
   }
-
-  return {};
+  return { success: false, accountInfo: {} };
 };
 
-export default AccountInfoService;
+module.exports = AccountInfoService;

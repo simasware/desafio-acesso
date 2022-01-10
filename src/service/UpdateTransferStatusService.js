@@ -1,4 +1,4 @@
-import TransactionLog from "../models/TransactionLog.js";
+const TransactionLog = require("../models/TransactionLog.js");
 
 const UpdateTransferStatusService = async (
   transactionId,
@@ -19,4 +19,4 @@ const UpdateTransferStatusService = async (
   return false;
 };
 
-export default UpdateTransferStatusService;
+module.exports = UpdateTransferStatusService;

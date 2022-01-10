@@ -1,4 +1,4 @@
-import amqplib from "amqplib";
+const amqplib = require("amqplib");
 
 const connect = () => {
   return amqplib
@@ -35,4 +35,4 @@ const consume = (queue, callback) => {
     .catch((err) => console.log(err));
 };
 
-export default { sendToQueue, consume };
+module.exports = { sendToQueue, consume };

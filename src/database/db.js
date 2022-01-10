@@ -1,19 +1,19 @@
-import { Sequelize } from "sequelize";
-import doetenv from "dotenv";
+const Sequelize = require("sequelize");
+const doetenv = require("dotenv");
 
 doetenv.config();
 
 const sequelize = new Sequelize(process.env.PG_URL, {
   dialect: "postgres",
-  logging: sqlLogger,
+  logging: false,
   define: {
     timestamps: true,
   },
 });
 
-function sqlLogger(queryString, queryObject) {
-  console.log(queryString);
-  console.log(queryObject.bind);
-}
+// function sqlLogger(queryString, queryObject) {
+//   console.log(queryString);
+//   console.log(queryObject.bind);
+// }
 
-export default sequelize;
+module.exports = sequelize;

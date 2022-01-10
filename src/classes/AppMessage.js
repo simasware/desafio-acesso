@@ -1,11 +1,11 @@
 const AppMessage = (status, message, success = true) => {
   return {
     success,
-    error: {
+    response: {
       status,
       message,
     },
   };
 };
 
-export default AppMessage;
+module.exports = AppMessage;
